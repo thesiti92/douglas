@@ -4,12 +4,12 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # enable_pin = 18
-coil_A_1_pin = 18
-coil_A_2_pin = 19
-coil_B_1_pin = 20
-coil_B_2_pin = 21
+coil_A_1_pin = 17
+coil_A_2_pin = 16
+coil_B_1_pin = 13
+coil_B_2_pin = 12
 
-GPIO.setup(enable_pin, GPIO.OUT)
+#GPIO.setup(enable_pin, GPIO.OUT)
 GPIO.setup(coil_A_1_pin, GPIO.OUT)
 GPIO.setup(coil_A_2_pin, GPIO.OUT)
 GPIO.setup(coil_B_1_pin, GPIO.OUT)
