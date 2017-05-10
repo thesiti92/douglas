@@ -17,6 +17,8 @@ def turnOffMotors():
 
 atexit.register(turnOffMotors)
 
+degrees_per_step = 1.8
+
 myStepper = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1
 myStepper.setSpeed(30)             # 30 RPM
 
@@ -24,5 +26,3 @@ while (True):
     print("Single coil steps")
     myStepper.step(200, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
     myStepper.step(200, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
-
-
