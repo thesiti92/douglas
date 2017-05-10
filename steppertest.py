@@ -31,9 +31,12 @@ def testRotate():
 
 def testSingle(steps):
     myStepper.step(steps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+
 def setRpm(rpm):
     myStepper.setSpeed(rpm)
+
 def testBackSingle(steps):
     myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.SINGLE)
+    
 def testDouble(steps):
     myStepper.step(steps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
