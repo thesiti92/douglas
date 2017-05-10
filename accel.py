@@ -1,3 +1,5 @@
+#deprecated. used for old stepper driver board
+
 import RPi.GPIO as GPIO
 import time
 
