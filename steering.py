@@ -2,11 +2,11 @@ from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 
 class steering_motor:
-    def __init__(self, controller, pim):
+    def __init__(self, controller, pin):
         self.MC = controller
         if (pin < 0) or (pin > 15):
             raise NameError('PWM pin must be between 0 and 15 inclusive')
-        self.PWMpin = pim
+        self.PWMpin = pin
 
     def setSpeed(self, speed):
         if (speed < 0):
