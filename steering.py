@@ -1,4 +1,5 @@
 from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
+from Adafruit_MotorHAT import Adafruit_MotorHAT
 
 class steering_motor:
     def __init__(self, controller, pwm):
@@ -14,3 +15,7 @@ class steering_motor:
         if (speed > 255):
             speed = 255
         self.MC._pwm.setPWM(self.PWMpin, 0, speed*16)
+if __name__ == "__main__":
+    mh = Adafruit_MotorHAT()
+    motor = steering_motor(mh, 15)
+    motor.setSpeed(10)
