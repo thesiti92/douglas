@@ -14,7 +14,9 @@ class steering_motor:
         if (speed > 255):
             speed = 255
         self.MC._pwm.setPWM(self.PWMpin, 0, speed*16)
+mh = Adafruit_MotorHAT()
+motor = steering_motor(mh, 15)
+def setSpeed(speed):
+    motor.setSpeed(speed)
 if __name__ == "__main__":
-    mh = Adafruit_MotorHAT()
-    motor = steering_motor(mh, 15)
     motor.setSpeed(10)
