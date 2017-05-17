@@ -33,6 +33,13 @@ class steering_motor:
         self.setSpeed(speed)
         time.sleep(1)
         GPIO.output(self.sleep_pin, 0)
+    def backAndForth(self, speed, delay=1, times=5):
+        self.setSpeed(speed)
+        GPIO.output(self.sleep_pin, 1)
+        for x in range(times):
+            time.sleep(delay)
+            GPIO.output(self.dir_pin, x % 2)
+        GPIO.output(self.sleep_pin, 0)
 
 
 mh = Adafruit_MotorHAT()
@@ -40,8 +47,9 @@ motor = steering_motor(mh, 15, 23, 22, 24)
 
 def setSpeed(speed):
     motor.setSpeed(speed)
-
 def testSpeed(speed):
     motor.testSpeed(speed)
+def backAndForth(speed, delay=1, times=5):
+    motor.backAndForth(speed, delay, times)
 if __name__ == "__main__":
     motor.setSpeed(10)
