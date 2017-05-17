@@ -39,6 +39,7 @@ class steering_motor:
         for x in range(times):
             time.sleep(delay)
             GPIO.output(self.dir_pin, x % 2)
+
         GPIO.output(self.sleep_pin, 0)
 
 
