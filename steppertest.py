@@ -39,4 +39,4 @@ def testBackSingle(steps):
     myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.SINGLE)
     
 def testDouble(steps):
-    myStepper.step(steps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+    myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
