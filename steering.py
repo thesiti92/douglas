@@ -6,7 +6,7 @@ GPIO.setmode(GPIO.BCM)
 
 
 class steering_motor:
-    def __init__(self, controller, pwm_pin, sleep_pin, dir_pin, flt_pin):
+    def __init__(self, controller, pwm_pin, sleep_pin, dir_pin):
         self.MC = controller
         if (pwm_pin < 0) or (pwm_pin > 15):
             raise NameError('PWM pin must be between 0 and 15 inclusive')
@@ -18,8 +18,6 @@ class steering_motor:
         self.dir_pin = dir_pin
         GPIO.setup(dir_pin, GPIO.OUT)
 
-        self.flt_pin = flt_pin
-        GPIO.setup(flt_pin, GPIO.IN)
 
 
     def setSpeed(self, speed):
@@ -29,10 +27,9 @@ class steering_motor:
             speed = 255
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed*16)
     def testSpeed(self, speed):
-        GPIO.output(self.sleep_pin, 1)
         self.setSpeed(speed)
         time.sleep(1)
-        GPIO.output(self.sleep_pin, 0)
+        self.setSpeed(0)
     def backAndForth(self, speed, delay=1, times=5):
         self.setSpeed(speed)
         GPIO.output(self.sleep_pin, 1)
@@ -44,7 +41,7 @@ class steering_motor:
 
 
 mh = Adafruit_MotorHAT()
-motor = steering_motor(mh, 15, 23, 22, 24)
+motor = steering_motor(mh, 15, 0, 22)
 
 def setSpeed(speed):
     motor.setSpeed(speed)

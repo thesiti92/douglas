@@ -1,27 +1,58 @@
-from RPi import GPIO
-from time import sleep
 
-clk = 24
-dt = 25
+#!/usr/bin/env python
+import RPi.GPIO as GPIO
+import time
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+RoAPin = 24    # pin11
+RoBPin = 25    # pin12
 
-counter = 0
-clkLastState = GPIO.input(clk)
+globalCounter = 0
 
-try:
-    while True:
-        clkState = GPIO.input(clk)
-        dtState = GPIO.input(dt)
-        if clkState != clkLastState:
-            if dtState != clkState:
-                counter += 1
-            else:
-                counter -= 1
-                print counter
-        clkLastState = clkState
-        sleep(0.01)
-finally:
-    GPIO.cleanup()
+flag = 0
+Last_RoB_Status = 0
+Current_RoB_Status = 0
+
+def setup():
+	GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
+	GPIO.setup(RoAPin, GPIO.IN)    # input mode
+	GPIO.setup(RoBPin, GPIO.IN)
+
+def rotaryDeal():
+	global flag
+	global Last_RoB_Status
+	global Current_RoB_Status
+	global globalCounter
+	Last_RoB_Status = GPIO.input(RoBPin)
+	while(not GPIO.input(RoAPin)):
+		Current_RoB_Status = GPIO.input(RoBPin)
+		flag = 1
+	if flag == 1:
+		flag = 0
+		if (Last_RoB_Status == 0) and (Current_RoB_Status == 1):
+			globalCounter = globalCounter + 1
+			print 'globalCounter = %d' % globalCounter
+		if (Last_RoB_Status == 1) and (Current_RoB_Status == 0):
+			globalCounter = globalCounter - 1
+			print 'globalCounter = %d' % globalCounter
+
+def clear(ev=None):
+        globalCounter = 0
+	print 'globalCounter = %d' % globalCounter
+	time.sleep(1)
+
+
+def loop():
+	global globalCounter
+	while True:
+		rotaryDeal()
+#		print 'globalCounter = %d' % globalCounter
+
+def destroy():
+	GPIO.cleanup()             # Release resource
+
+if __name__ == '__main__':     # Program start from here
+	setup()
+	try:
+		loop()
+	except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
+		destroy()
