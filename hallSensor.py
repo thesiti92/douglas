@@ -5,6 +5,7 @@ import time, math
 
 dist_meas = 0.00
 km_per_hour = 0
+m_per_hour = 0
 rpm = 0
 elapse = 0
 sensor = 12
@@ -42,5 +43,5 @@ if __name__ == '__main__':
    init_interrupt()
    while True:
       calculate_speed(20)   # call this function with wheel radius as parameter
-        print('mph: {0:.0f}mph rpm:{1:.0f}-RPM kmh:{2:.0f}-KMH dist_meas:{3:.2f}m pulse:{4}'.format(m_per_hour,rpm,km_per_hour,dist_meas,pulse))
+      print('mph: {0:.0f}mph rpm:{1:.0f}-RPM kmh:{2:.0f}-KMH dist_meas:{3:.2f}m pulse:{4}'.format(m_per_hour,rpm,km_per_hour,dist_meas,pulse))
       sleep(0.1)
