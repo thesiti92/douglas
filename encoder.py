@@ -2,57 +2,52 @@
 #!/usr/bin/env python
 import RPi.GPIO as GPIO
 import time
-
-RoAPin = 24    # pin11
-RoBPin = 25    # pin12
-
-globalCounter = 0
-
-flag = 0
-Last_RoB_Status = 0
-Current_RoB_Status = 0
-
-def setup():
-	GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
-	GPIO.setup(RoAPin, GPIO.IN)    # input mode
-	GPIO.setup(RoBPin, GPIO.IN)
-
-def rotaryDeal():
-	global flag
-	global Last_RoB_Status
-	global Current_RoB_Status
-	global globalCounter
-	Last_RoB_Status = GPIO.input(RoBPin)
-	while(not GPIO.input(RoAPin)):
-		Current_RoB_Status = GPIO.input(RoBPin)
-		flag = 1
-	if flag == 1:
-		flag = 0
-		if (Last_RoB_Status == 0) and (Current_RoB_Status == 1):
-			globalCounter = globalCounter + 1
-			print 'globalCounter = %d' % globalCounter
-		if (Last_RoB_Status == 1) and (Current_RoB_Status == 0):
-			globalCounter = globalCounter - 1
-			print 'globalCounter = %d' % globalCounter
-
-def clear(ev=None):
-        globalCounter = 0
-	print 'globalCounter = %d' % globalCounter
-	time.sleep(1)
+from threading import Thread
 
 
-def loop():
-	global globalCounter
-	while True:
-		rotaryDeal()
-#		print 'globalCounter = %d' % globalCounter
+class encoder:
+	def __init__(self, RoAPin = 24, RoBPin=25):
+		GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
+		GPIO.setup(RoAPin, GPIO.IN)    # input mode
+		GPIO.setup(RoBPin, GPIO.IN)
+		self.RoAPin = RoAPin
+		self.RoBPin = RoBPin
+		self.globalCounter = 0
+		self.flag = 0
+		self.Last_RoB_Status = 0
+		self.Current_RoB_Status = 0
+		self.thread = Thread(target=loop)
+		self.deg_per_cycle = 0.215827338
+	def run(self):
+		try:
+			self.thread.start()
+		except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
+			destroy()
+	def getAngle(self):
+		return self.deg_per_cycle*self.globalCounter
+	def rotaryDeal(self):
+		self.Last_RoB_Status = GPIO.input(self.RoBPin)
+		while(not GPIO.input(self.RoAPin)):
+			self.Current_RoB_Status = GPIO.input(self.RoBPin)
+			self.flag = 1
+		if self.flag == 1:
+			self.flag = 0
+			if (self.Last_RoB_Status == 0) and (self.Current_RoB_Status == 1):
+				self.globalCounter = self.globalCounter + 1
+				print 'globalCounter = %d' % self.globalCounter
+			if (self.Last_RoB_Status == 1) and (self.Current_RoB_Status == 0):
+				self.globalCounter = self.globalCounter - 1
+				print 'globalCounter = %d' % self.globalCounter
 
-def destroy():
-	GPIO.cleanup()             # Release resource
+	def clear(self,ev=None):
+	        self.globalCounter = 0
+		print 'globalCounter = %d' % self.globalCounter
+		time.sleep(1)
 
-if __name__ == '__main__':     # Program start from here
-	setup()
-	try:
-		loop()
-	except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
-		destroy()
+	def loop(self):
+		while True:
+			rotaryDeal(self)
+	#		print 'globalCounter = %d' % globalCounter
+
+	def destroy(self):
+		GPIO.cleanup()             # Release resource
