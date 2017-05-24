@@ -2,6 +2,7 @@ from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 import time
 import RPi.GPIO as GPIO
+from encoder import Encoder
 GPIO.setmode(GPIO.BCM)
 
 
@@ -18,7 +19,18 @@ class steering_motor:
         self.dir_pin = dir_pin
         GPIO.setup(dir_pin, GPIO.OUT)
 
-
+        self.encoder = Encoder()
+        self.encoder.start()
+    def turn(self, degrees, dir="r", speed=100, error=1):
+        current_degrees = self.encoder.getAngle()
+        if dir=="r":
+            GPIO.output(self.dir_pin, 1)
+        elif dir=="l":
+            GPIO.output(self.dir_pin, 0)
+        self.setSpeed(speed)
+        while(abs(degrees-abs(current_degrees-self.encoder.getAngle()))>error):
+            current_degrees=self.encoder.getAngle
+        self.setSpeed(0)
 
     def setSpeed(self, speed):
         if (speed < 0):
@@ -36,8 +48,8 @@ class steering_motor:
         for x in range(times):
             time.sleep(delay)
             GPIO.output(self.dir_pin, x % 2)
-
         GPIO.output(self.sleep_pin, 0)
+
 
 
 mh = Adafruit_MotorHAT()

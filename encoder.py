@@ -5,7 +5,7 @@ import time
 from threading import Thread
 
 
-class encoder:
+class Encoder:
 	def __init__(self, RoAPin = 24, RoBPin=25):
 		GPIO.setmode(GPIO.BCM)       # Numbers GPIOs by physical location
 		GPIO.setup(RoAPin, GPIO.IN)    # input mode
