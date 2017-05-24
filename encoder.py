@@ -34,14 +34,14 @@ class Encoder:
 			self.flag = 0
 			if (self.Last_RoB_Status == 0) and (self.Current_RoB_Status == 1):
 				self.globalCounter = self.globalCounter + 1
-				print 'globalCounter = %d' % self.globalCounter
+				# print 'globalCounter = %d' % self.globalCounter
 			if (self.Last_RoB_Status == 1) and (self.Current_RoB_Status == 0):
 				self.globalCounter = self.globalCounter - 1
-				print 'globalCounter = %d' % self.globalCounter
+				# print 'globalCounter = %d' % self.globalCounter
 
 	def clear(self,ev=None):
 	        self.globalCounter = 0
-		print 'globalCounter = %d' % self.globalCounter
+		# print 'globalCounter = %d' % self.globalCounter
 		time.sleep(1)
 
 	def loop(self):
