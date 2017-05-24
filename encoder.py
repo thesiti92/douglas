@@ -16,9 +16,9 @@ class Encoder:
 		self.flag = 0
 		self.Last_RoB_Status = 0
 		self.Current_RoB_Status = 0
-		self.thread = Thread(target=loop)
+		self.thread = Thread(target=self.loop)
 		self.deg_per_cycle = 0.215827338
-	def run(self):
+	def start(self):
 		try:
 			self.thread.start()
 		except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
@@ -46,7 +46,7 @@ class Encoder:
 
 	def loop(self):
 		while True:
-			rotaryDeal(self)
+			self.rotaryDeal()
 	#		print 'globalCounter = %d' % globalCounter
 
 	def destroy(self):
