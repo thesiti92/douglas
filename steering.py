@@ -28,8 +28,11 @@ class steering_motor:
         elif dir=="l":
             GPIO.output(self.dir_pin, 0)
         self.setSpeed(speed)
+        print "Turning!"
+
         while(abs(degrees-abs(current_degrees-self.encoder.getAngle()))>error):
-            current_degrees=self.encoder.getAngle
+            current_degrees=self.encoder.getAngle()
+        print "done!"
         self.setSpeed(0)
 
     def setSpeed(self, speed):
