@@ -17,6 +17,7 @@ adc = Adafruit_ADS1x15.ADS1115()
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 GAIN = 1
+distance = 0
 
 #channels for radars are as follows:
 #forward = 1
@@ -32,10 +33,11 @@ print('-' * 37)
 while True:
     # Read all the ADC channel values in a list.
     values=[0]*4
-    for i in range(4)
+    for i in range(4):
         values[i] = adc.read_adc(i, gain=GAIN)
+        distance = 5.005*values[1]
     
-    print("Object is %s mm away" %5.005*values[1])
+    print("Object is %s mm away" %distance)
     print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
     
     time.sleep(0.5)
