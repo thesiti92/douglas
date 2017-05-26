@@ -35,9 +35,11 @@ while True:
     values=[0]*4
     for i in range(4):
         values[i] = adc.read_adc(i, gain=GAIN)
-        distance = 5.005*values[1]
+   	
+   	distance = 5.005*values[0]
+
+    #print (values[1])
+    #print("Object is %s mm away" %distance)
+	print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
     
-    print("Object is %s mm away" %distance)
-    print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
-    
-    time.sleep(0.5)
+    time.sleep(2)
