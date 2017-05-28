@@ -54,19 +54,17 @@ while True:
     #print("Object is %s mm away" %distance)
 	#print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
     #print("")
-    if distance > 7:
-    	drive()
 
-    else if 3 < distance < 7:
-    	brake(distance)
+   	if distance > 7:
+   		drive()
+   	elif 3 < distance < 7:
+   		brake(distance)
+   	elif distance < 3:
+   		stop(distance)
+   	else:
+   		drive()
 
-    else if distance < 3:
-    	stop(distance)
-
-    else:
-    	drive()
-
-    time.sleep(.5)
+   	time.sleep(.5)
 
 
 
