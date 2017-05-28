@@ -44,9 +44,9 @@ def drive():
 while True:
     # Read all the ADC channel values in a list.
     
-   	adc = adc.read_adc(0,gain=GAIN)
+   	adc_num = adc.read_adc(0,gain=GAIN)
    	distance = 1000*adc*converg_factor
-   	print('ADC is: {0:>6}'.format(adc))
+   	print('ADC is: {0:>6}'.format(adc_num))
    	print("")
    	print('Distance is: {0:<6} meters'.format(distance))
    	print("")
