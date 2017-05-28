@@ -57,7 +57,7 @@ while True:
     if distance > 6.9:
     	drive()
 
-    else if 3 < distance < 6.9:
+    else if 3 < distance < 7:
     	brake(distance)
 
     else if distance < 3:
