@@ -22,7 +22,7 @@ class steering_motor:
         self.encoder = Encoder()
         self.encoder.start()
     def turn(self, degrees, dir="r", speed=100, error=1):
-        current_degrees = self.encoder.getAngle()
+        start_degrees = self.encoder.getAngle()
         if dir=="r":
             GPIO.output(self.dir_pin, 1)
         elif dir=="l":
@@ -30,8 +30,8 @@ class steering_motor:
         self.setSpeed(speed)
         print "Turning!"
 
-        while(abs(degrees-abs(current_degrees-self.encoder.getAngle()))>error):
-            current_degrees=self.encoder.getAngle()
+        while(abs(degrees-abs(start_degrees-self.encoder.getAngle()))>error):
+            pass
         print "done!"
         self.setSpeed(0)
 
