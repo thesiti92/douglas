@@ -41,9 +41,9 @@ class steering_motor:
         if (speed > 255):
             speed = 255
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed*16)
-    def testSpeed(self, speed):
+    def testSpeed(self, speed, delay=1):
         self.setSpeed(speed)
-        time.sleep(1)
+        time.sleep(delay)
         self.setSpeed(0)
     def backAndForth(self, speed, delay=1, times=5):
         self.setSpeed(speed)
@@ -60,8 +60,8 @@ motor = steering_motor(mh, 15, 0, 22)
 
 def setSpeed(speed):
     motor.setSpeed(speed)
-def testSpeed(speed):
-    motor.testSpeed(speed)
+def testSpeed(speed, delay=1):
+    motor.testSpeed(speed,delay)
 def backAndForth(speed, delay=1, times=5):
     motor.backAndForth(speed, delay, times)
 if __name__ == "__main__":
