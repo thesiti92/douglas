@@ -18,11 +18,11 @@ adc = Adafruit_ADS1x15.ADS1115()
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 GAIN = 1
 distance = 0
-
+converg_factor = 0.156254768517
 #channels for radars are as follows:
-#forward = 1
-#right = 2
-#left = 3
+#forward = 0
+#right = 1
+#left = 2
 
 
 print('Reading ADS1x15 values, press Ctrl-C to quit...')
@@ -30,16 +30,43 @@ print('Reading ADS1x15 values, press Ctrl-C to quit...')
 print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*range(4)))
 print('-' * 37)
 
+def brake(dist)
+	print('**********Breaking! Object detected {0:>3} meters away**********'.format(distance))
+	time.sleep(1)
+
+def stop(dist)
+	print('HARD STOP: OBJECT DETECTED IN {0:<3} METERS'.format(dist))
+
+def drive()
+	print('No object detected. Smooth sailing!')
+	time.sleep(1)
+
 while True:
     # Read all the ADC channel values in a list.
-    values=[0]*4
-    for i in range(4):
-        values[i] = adc.read_adc(i, gain=GAIN)
-   	
-   	distance = 5.005*values[0]
-
+    
+   	adc = adc.read_adc(0,gain=GAIN)
+   	distance = 1000*adc*converg_factor
+   	print('ADC is: {0:>6}'.format(adc))
+   	print("")
+   	print('Distance is: {0:<6} meters'.format(distance)
+   	print("")
     #print (values[1])
     #print("Object is %s mm away" %distance)
-	print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
-    
-    time.sleep(2)
+	#print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
+    #print("")
+    if (distance>6.9):
+    	drive()
+
+    else if (3<distance<6.9):
+    	brake(distance)
+
+    else if (distance<3)
+    	stop(distance)
+
+    else
+    	drive()
+
+    time.sleep(.5)
+
+
+
