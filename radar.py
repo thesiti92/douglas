@@ -48,7 +48,7 @@ while True:
    	distance = 1000*adc*converg_factor
    	print('ADC is: {0:>6}'.format(adc))
    	print("")
-   	print('Distance is: {0:<6} meters'.format(distance)
+   	print('Distance is: {0:<6} meters'.format(distance))
    	print("")
     #print (values[1])
     #print("Object is %s mm away" %distance)
