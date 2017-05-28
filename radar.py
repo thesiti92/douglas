@@ -30,14 +30,14 @@ print('Reading ADS1x15 values, press Ctrl-C to quit...')
 print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*range(4)))
 print('-' * 37)
 
-def brake(dist)
+def brake(dist):
 	print('**********Breaking! Object detected {0:>3} meters away**********'.format(distance))
 	time.sleep(1)
 
-def stop(dist)
+def stop(dist):
 	print('HARD STOP: OBJECT DETECTED IN {0:<3} METERS'.format(dist))
 
-def drive()
+def drive():
 	print('No object detected. Smooth sailing!')
 	time.sleep(1)
 
@@ -60,10 +60,10 @@ while True:
     else if (3<distance<6.9):
     	brake(distance)
 
-    else if (distance<3)
+    else if (distance<3):
     	stop(distance)
 
-    else
+    else:
     	drive()
 
     time.sleep(.5)
