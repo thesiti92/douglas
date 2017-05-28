@@ -45,7 +45,7 @@ while True:
     # Read all the ADC channel values in a list.
     
    	adc_num = adc.read_adc(0,gain=GAIN)
-   	distance = 1000*adc_num*converg_factor
+   	distance = adc_num*converg_factor/1000
    	print('ADC is: {0:>6}'.format(adc_num))
    	print("")
    	print('Distance is: {0:<6} meters'.format(distance))
