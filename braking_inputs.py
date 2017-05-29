@@ -91,7 +91,7 @@ class HallSensor:
 		
 
 	def loop():
-		while True
+		while True:
 			self.get_speed()
 
 
