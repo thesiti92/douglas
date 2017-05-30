@@ -25,7 +25,7 @@ class Radar:
 		except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
 			destroy()
 
-	def get_distance():
+	def get_distance(self):
 		self.adc_num = adc.read_adc(0,self.GAIN)
 	   	self.distance = self.adc_num*self.converg_factor/1000
 	   	self.distance += 1
@@ -34,7 +34,7 @@ class Radar:
 	   	print('Distance is: {0:<6} meters'.format(distance))
 	   	print("")
 
-	def loop():
+	def loop(self):
 		while True:
 			self.get_distance()
 
@@ -64,12 +64,12 @@ class HallSensor:
 		except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
 			destroy()
 
-	def init_GPIO():               # initialize GPIO
+	def init_GPIO(self):               # initialize GPIO
  		GPIO.setmode(GPIO.BCM)
    		GPIO.setwarnings(False)
    		GPIO.setup(sensor,GPIO.IN,GPIO.PUD_UP)
    	
-   	def init_interrupt():
+   	def init_interrupt(self):
    		GPIO.add_event_detect(sensor, GPIO.FALLING, callback = calculate_elapse, bouncetime = 20)
 
    	def calculate_elapse(channel): #ALEX why does this take a paramater called "channel"?
@@ -77,7 +77,7 @@ class HallSensor:
    		self.elapse = time.time() - self.start_timer 
    		self.start_timer = time.time()
    		
-	def get_speed():
+	def get_speed(self):
 	   if self.elapse !=0:                     # to avoid DivisionByZero error
 	      self.rpm = 1/self.elapse * 60
 	      self.circ_cm = (2*math.pi)*self.radius        # calculate wheel circumference in CM
@@ -90,7 +90,7 @@ class HallSensor:
 	      return self.m_per_sec
 		
 
-	def loop():
+	def loop(self):
 		while True:
 			self.get_speed()
 
