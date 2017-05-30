@@ -12,12 +12,11 @@ class Encoder:
 		GPIO.setup(RoBPin, GPIO.IN)
 		self.RoAPin = RoAPin
 		self.RoBPin = RoBPin
-		self.AState = False
-		self.BState = False
 		self.globalCounter = 0
 		self.flag = 0
 		self.Last_RoB_Status = 0
 		self.Current_RoB_Status = 0
+		self.thread = Thread(target=self.loop)
 		self.deg_per_cycle = 0.215827338
 	def start(self):
 		try:
