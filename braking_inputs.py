@@ -30,7 +30,7 @@ class Radar:
 	   	self.distance = self.adc_num*self.converg_factor/1000
 	   	self.distance += 1
 	
-	def print_distance(): 	
+	def print_distance(self): 	
 	   	print('Distance is: {0:<6} meters'.format(distance))
 	   	print("")
 
