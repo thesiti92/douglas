@@ -4,23 +4,14 @@ import io
 import picamera
 import picamera.array
 camera = picamera.PiCamera()
-
-#cap = cv2.VideoCapture('track.mp4')
 stream = picamera.array.PiRGBArray(camera)
 
 
 for foo in camera.capture_continuous(stream, format='bgr'):
-    frame = stream.array
-    
-#    grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#    blur = cv2.bilateralFilter(grey,12,70,70)
-#    ret3,th3 = cv2.threshold(blur,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-
-#    edges = cv2.Canny(th3,1000,1000, 5)
-    cv2.imshow('Original',frame)
-
-#    lines = cv2.HoughLines(edges,1,np.pi/180,100)
-#    color = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)
+    ret3,frame = cv2.threshold(cv2.bilateralFilter(cv2.cvtColor(cv2.resize(stream.array, [500,500]), cv2.COLOR_BGR2GRAY),12,70,70),0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    edges = cv2.Canny(frame,1000,1000, 5)
+    lines = cv2.HoughLines(edges,1,np.pi/180,100)
+    print lines[0]
 #    for rho,theta in lines[0]:
 #        a = np.cos(theta)
 #        b = np.sin(theta)
@@ -34,10 +25,5 @@ for foo in camera.capture_continuous(stream, format='bgr'):
 #        cv2.line(color,(x1,y1),(x2,y2),(0,0,255),2)
 #    cv2.imshow('Trajectory',color)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
     stream.truncate()
     stream.seek(0)
-
-cap.release()
-cv2.destroyAllWindows()
