@@ -30,7 +30,8 @@ class steering_motor:
         self.setSpeed(speed)
         print "Turning!"
 
-        while(abs(degrees-abs(start_degrees-self.encoder.getAngle()))>error):
+        while(abs(degrees-abs(abs(start_degrees)-abs(self.encoder.getAngle())))>error):
+            print abs(degrees-abs(abs(start_degrees)-abs(self.encoder.getAngle())))
             pass
         print "done!"
         self.setSpeed(0)
@@ -64,5 +65,7 @@ def testSpeed(speed, delay=1):
     motor.testSpeed(speed,delay)
 def backAndForth(speed, delay=1, times=5):
     motor.backAndForth(speed, delay, times)
+def kill():
+    motor.setSpeed(0)
 if __name__ == "__main__":
     motor.setSpeed(10)
