@@ -3,7 +3,7 @@ from math import degrees
 from cv2 import threshold, cvtColor, resize, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU, Canny, HoughLines, bilateralFilter
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-from steering import 
+from steering import turn
 camera = PiCamera()
 stream = PiRGBArray(camera)
 
@@ -19,9 +19,9 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
     #use list of thetas to figure out degrees to turn
     if (average(theta_filtered) < half):
         radians_to_turn = half - average(thetas)
-        print "turn left", degrees(radians_to_turn)
+        turn(degrees(radians_to_turn))
     else:
         radians_to_turn = average(thetas) - half
-        print "turn right", degrees(radians_to_turn)
+        turn(degrees(radians_to_turn))
     stream.truncate()
     stream.seek(0)
