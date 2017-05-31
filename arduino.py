@@ -1,5 +1,7 @@
 import serial
-
-ser = serial.Serial('/dev/ttyACM1', 115200)
+import sys
+ser = serial.Serial('/dev/ttyACM0', 115200)
 while True:
-	print str(ser.readline())
+	data = ser.readline()
+	if data:
+		sys.stdout.write(data)
