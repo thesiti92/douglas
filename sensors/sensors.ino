@@ -10,8 +10,14 @@ void setup() {
   Serial.begin(115200);
 }
 
-int mph = 50;
+long oldPosition  = -999;
+int mph = 0;
 
 void loop() {
-  Serial.println(String(myEnc.read()*.0975) + " " + mph);
+  long newPosition = myEnc.read();
+  if (newPosition != oldPosition) {
+      oldPosition = newPosition;
+      Serial.println(String(newPosition*.0975) + " " + mph);
+
+  }
 }
