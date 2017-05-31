@@ -1,10 +1,8 @@
-from Adafruit_MotorHAT.Adafruit_PWM_Servo_Driver import PWM
 from Adafruit_MotorHAT import Adafruit_MotorHAT
-import time
-import RPi.GPIO as GPIO
-import serial
-GPIO.setmode(GPIO.BCM)
-ser = serial.Serial('/dev/ttyACM1', 115200)
+from RPi.GPIO import setmode, output, setup, OUT
+from serial import Serial
+setmode(BCM)
+ser = Serial('/dev/ttyACM1', 115200)
 
 
 class steering_motor:
@@ -15,23 +13,20 @@ class steering_motor:
 
         self.pwm_pin = pwm_pin
         self.sleep_pin = sleep_pin
-        GPIO.setup(sleep_pin, GPIO.OUT)
+        setup(sleep_pin, OUT)
         self.dir_pin = dir_pin
-        GPIO.setup(dir_pin, GPIO.OUT)
+        setup(dir_pin, OUT)
 
-    def turn(self, degrees, dir="r", speed=100, error=1):
+    def turn(self, degrees, dir=True, speed=100, error=1):
         start_degrees = float(ser.readline())
-        if dir=="r":
-            GPIO.output(self.dir_pin, 1)
-        elif dir=="l":
-            GPIO.output(self.dir_pin, 0)
+        if dir:
+            #True is right, false is left
+            output(self.dir_pin, 1)
+        else:
+            output(self.dir_pin, 0)
         self.setSpeed(speed)
-        print "Turning!"
-
         while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline()))))>error):
-            print abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline()))))
             pass
-        print "done!"
         self.setSpeed(0)
 
     def setSpeed(self, speed):
@@ -40,30 +35,12 @@ class steering_motor:
         if (speed > 255):
             speed = 255
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed*16)
-    def testSpeed(self, speed, delay=1):
-        self.setSpeed(speed)
-        time.sleep(delay)
-        self.setSpeed(0)
-    def backAndForth(self, speed, delay=1, times=5):
-        self.setSpeed(speed)
-        GPIO.output(self.sleep_pin, 1)
-        for x in range(times):
-            time.sleep(delay)
-            GPIO.output(self.dir_pin, x % 2)
-        GPIO.output(self.sleep_pin, 0)
-
 
 
 mh = Adafruit_MotorHAT()
 motor = steering_motor(mh, 15, 0, 22)
 
-def setSpeed(speed):
-    motor.setSpeed(speed)
-def testSpeed(speed, delay=1):
-    motor.testSpeed(speed,delay)
-def backAndForth(speed, delay=1, times=5):
-    motor.backAndForth(speed, delay, times)
+def turn(degrees, dir=True, speed=100, error=2):
+    motor.turn(degrees, dir, speed, error)
 def kill():
     motor.setSpeed(0)
-if __name__ == "__main__":
-    motor.setSpeed(10)
