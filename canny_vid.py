@@ -10,6 +10,8 @@ stream = picamera.array.PiRGBArray(camera)
 theta_list=[]
 rho_list=[]
 half=np.pi/2
+quarter=0.25*np.pi
+three_quarter=0.75*np.pi
 
 for foo in camera.capture_continuous(stream, format='bgr'):
     ret3,frame = cv2.threshold(cv2.bilateralFilter(cv2.cvtColor(cv2.resize(stream.array, [500,500]), cv2.COLOR_BGR2GRAY),12,70,70),0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
@@ -35,10 +37,13 @@ for foo in camera.capture_continuous(stream, format='bgr'):
     theta_np=np.array(theta_list)
     rho_np = np.array(rho_list)
 
-    theta_filtered=theta_np[np.where((theta_np>=0) & (theta_np <=np.pi))]
-    rho_filtered=rho_np[np.where((rho_np>=0) & (rho_np <=np.pi))]
+    theta_filtered=theta_np[np.where((theta_np>=quarter) & (theta_np <=three_quarter))]
+    rho_filtered=rho_np[np.where((rho_np>=quarter) & (rho_np <=three_quarter))]
 
 #use list of thetas to figure out degrees to turn
+    print "average theta", np.average(theta_np)
+    print "average filtered theta", np.average(theta_filtered)
+
     if (np.average(theta_filtered) < half):
         radians_to_turn = half - np.average(theta_list)
         print "turn left", math.degrees(radians_to_turn)
