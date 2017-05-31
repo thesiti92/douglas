@@ -15,6 +15,9 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
     lines = HoughLines(edges,1,pi/180,100)
     if not lines.any():
         kill()
+        stream.truncate()
+        stream.seek(0)
+        continue
     thetas=array([theta for rho, theta in lines[0]])
     theta_filtered=thetas[where((thetas>=0) & (thetas <=pi))]
 
