@@ -3,7 +3,7 @@ from math import degrees
 from cv2 import threshold, cvtColor, resize, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU, Canny, HoughLines, bilateralFilter
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-from steering import turn
+from steering import turn, kill
 camera = PiCamera()
 stream = PiRGBArray(camera)
 
@@ -13,6 +13,8 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
     ret3,frame = threshold(bilateralFilter(cvtColor(stream.array, COLOR_BGR2GRAY),12,70,70),0,255,THRESH_BINARY+THRESH_OTSU)
     edges = Canny(frame,1000,1000, 5)
     lines = HoughLines(edges,1,pi/180,100)
+    if not lines[0]:
+        kill()
     thetas=array([theta for rho, theta in lines[0]])
     theta_filtered=thetas[where((thetas>=0) & (thetas <=pi))]
 
