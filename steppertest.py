@@ -38,5 +38,9 @@ def setRpm(rpm):
 def testBackSingle(steps):
     myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.SINGLE)
     
-def testDouble(steps):
+def testBackDouble(steps):
     myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+
+def testDouble(steps):
+    myStepper.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+

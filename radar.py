@@ -55,9 +55,9 @@ while True:
 	#print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*values))
     #print("")
 
-   	if distance > 7:
+   	if distance > 5:
    		drive()
-   	elif 3 < distance < 7:
+   	elif 3 < distance < 5:
    		brake(distance)
    	elif distance < 3:
    		stop(distance)
