@@ -19,10 +19,10 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(500,500), use
 
 #use list of thetas to figure out degrees to turn
     if (average(theta_filtered) < half):
-        radians_to_turn = half - average(theta_list)
+        radians_to_turn = half - average(thetas)
         print "turn left", degrees(radians_to_turn)
     else:
-        radians_to_turn = average(theta_list) - half
+        radians_to_turn = average(thetas) - half
         print "turn right", degrees(radians_to_turn)
 
     stream.truncate()
