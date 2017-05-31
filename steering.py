@@ -4,7 +4,7 @@ import time
 import RPi.GPIO as GPIO
 import serial
 GPIO.setmode(GPIO.BCM)
-ser = serial.Serial('/dev/ttyACM0', 115200)
+ser = serial.Serial('/dev/ttyACM1', 115200)
 
 
 class steering_motor:
@@ -20,7 +20,7 @@ class steering_motor:
         GPIO.setup(dir_pin, GPIO.OUT)
 
     def turn(self, degrees, dir="r", speed=100, error=1):
-        start_degrees = ser.readline()
+        start_degrees = float(ser.readline())
         if dir=="r":
             GPIO.output(self.dir_pin, 1)
         elif dir=="l":
@@ -28,8 +28,8 @@ class steering_motor:
         self.setSpeed(speed)
         print "Turning!"
 
-        while(abs(degrees-abs(abs(start_degrees)-abs(ser.readline())))>error):
-            print abs(degrees-abs(abs(start_degrees)-abs(ser.readline())))
+        while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline()))))>error):
+            print abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline()))))
             pass
         print "done!"
         self.setSpeed(0)
