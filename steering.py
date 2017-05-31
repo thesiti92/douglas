@@ -1,5 +1,5 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT
-from RPi.GPIO import setmode, output, setup, OUT
+from RPi.GPIO import setmode, output, setup, OUT, BCM
 from serial import Serial
 setmode(BCM)
 ser = Serial('/dev/ttyACM1', 115200)
