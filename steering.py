@@ -18,14 +18,14 @@ class steering_motor:
         setup(dir_pin, OUT)
 
     def turn(self, degrees, dir=True, speed=100, error=1):
-        start_degrees = float(ser.readline())
+        start_degrees = float(ser.readline().split()[0])
         if dir:
             #True is right, false is left
             output(self.dir_pin, 1)
         else:
             output(self.dir_pin, 0)
         self.setSpeed(speed)
-        while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline()))))>error):
+        while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline().split()[0]))))>error):
             pass
         self.setSpeed(0)
 
