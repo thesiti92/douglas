@@ -3,6 +3,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 import time, math
 
+radius = 20
 dist_meas = 0.00
 km_per_hour = 0
 m_per_hour = 0
@@ -41,7 +42,7 @@ if __name__ == '__main__':
    init_GPIO()
    init_interrupt()
    while True:
-      calculate_speed(20)   # call this function with wheel radius as parameter
+      calculate_speed(radius)   # call this function with wheel radius as parameter
 <<<<<<< HEAD
       print('mph: {0:.0f}mph rpm:{1:.0f}-RPM kmh:{2:.0f}-KMH dist_meas:{3:.2f}m pulse:{4}'.format(m_per_hour,rpm,km_per_hour,dist_meas,pulse))
 =======

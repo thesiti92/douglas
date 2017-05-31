@@ -3,7 +3,6 @@
 import time
 from time import sleep
 from braking_inputs import HallEffect, Radar
-import accel
 
 
 if __name__ == "__main__":
