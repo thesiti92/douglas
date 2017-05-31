@@ -15,28 +15,33 @@ def turnOffMotors():
     mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
     mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
-atexit.register(turnOffMotors)
+class Stepper(port):
 
-degrees_per_step = 1.8
+    atexit.register(turnOffMotors)
+    degrees_per_step = 1.8
 
-myStepper = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1
-myStepper.setSpeed(40)             # 30 RPM
+    self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
+    self.setSpeed(40)             # 30 RPM
 
-def setRpm(rpm):
-    myStepper.setSpeed(rpm)             # 30 RPM
-def testRotate():
-    print("Single coil steps")
-    myStepper.step(200, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
-    myStepper.step(200, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
+    def setRpm(rpm):
+        self.setSpeed(rpm)  # 30 RPM
 
-def testSingle(steps):
-    myStepper.step(steps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+    def testRotate(self):
+        print("Single coil steps")
+        self.step(200, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+        self.step(200, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-def setRpm(rpm):
-    myStepper.setSpeed(rpm)
+    def testSingle(steps):
+        self.step(steps, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
 
-def testBackSingle(steps):
-    myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.SINGLE)
+    def setRpm(rpm):
+        self.setSpeed(rpm)
+
+    def testBackSingle(steps):
+        self.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.SINGLE)
     
-def testDouble(steps):
-    myStepper.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+    def testBackDouble(steps):
+        self.step(steps, Adafruit_MotorHAT.BACKWARD,  Adafruit_MotorHAT.DOUBLE)
+
+    def testDouble(steps):
+        self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
