@@ -5,6 +5,7 @@ import time
 import Adafruit_ADS1x15
 from braking_inputs import Radar, HallEffect
 import steppertest
+import arduino
 
 # Create an ADS1115 ADC (16-bit) instance.
 adc = Adafruit_ADS1x15.ADS1115()
@@ -60,12 +61,14 @@ def stop(dist):
 	if brakeStepCount != 0:
 		brakeStep.testDouble(brakeStepNum)
 
-#Takes off brakes and accelerates to 5mph
+#Takes off brakes and accelerates to 3mph
 def drive():
 	print('No object detected. Smooth sailing!')
+	data = captureData()
+	mph=data[1]
 	if brakeStepCount != 0:
 		brakeStep.testBackDouble(brakeStepCount)
-	if hall.mph < 5:
+	if mph < 3:
 		accStep.testDouble(accStepNum) #Need to test direction + accStepNum value
 		
 	time.sleep(1)
