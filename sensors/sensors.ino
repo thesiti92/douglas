@@ -19,18 +19,10 @@ void loop() {
   float current_speed=0; //mateen needs to get hall effect code for this to work, this should read in speed from hall sensor 
 
   if (newPosition != oldPosition) {
-      oldPosition = newPosition;
-      Serial.println(String(newPosition*.0975) + " " + mph);
+    oldPosition = newPosition;
+    Serial.println(String(newPosition*.0975) + " " + current_speed);
   }
-  if(current_speed-old_speed<-1) {
-  Serial.println(String(newPosition*.0975) + " " + mph);
-  }else {
-  	if (current_speed-oldspeed>1){
-  	Serial.println(String(newPosition*.0975) + " " + mph);
-  	}
-
+  if(abs(current_speed-old_speed)>1) {
+    Serial.println(String(newPosition*.0975) + " " + current_speed);
   }
-  
-
-
 }
