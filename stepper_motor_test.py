@@ -33,19 +33,19 @@ class Stepper():
         self.step(200, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.SINGLE)
         self.step(200, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-    def testSingle(steps):
+    def testSingle(self, steps):
         self.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.SINGLE)
 
     def setRpm(rpm):
         self.setSpeed(rpm)
 
-    def testBackSingle(steps):
+    def testBackSingle(self, steps):
         self.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-    def testBackDouble(steps):
+    def testBackDouble(self, steps):
         self.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-    def testDouble(steps):
+    def testDouble(self, steps):
         self.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 stepper = Stepper()
