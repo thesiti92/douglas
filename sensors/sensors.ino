@@ -9,9 +9,9 @@ volatile unsigned int revolutions;
 unsigned long lastmillis;
 float last = 0;
 float timeElapsed = 0;
-float circ = 67.23;
+float circ = .6723;
 float mph;
-float mph_conversion = circ * 2.23694;
+float mph_conversion = circ * 2.23694*1000;
 
 long oldPosition  = -999;
 float old_speed = -999;
@@ -54,7 +54,7 @@ void loop() {
  void update_mph()
  {
    timeElapsed = millis() - last;
-   mph = timeElapsed * mph_conversion;
+   mph = mph_conversion/timeElapsed;
    Serial.println(String(newPosition*.0975) + " " + String(mph));
    last = millis();
  }
