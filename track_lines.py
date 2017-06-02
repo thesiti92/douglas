@@ -7,19 +7,21 @@ from steering import turn, kill
 from RPi.GPIO import BCM, add_event_detect, RISING, FALLING
 camera = PiCamera()
 stream = PiRGBArray(camera)
-brake_pin = 15
+brake_pin = 12
 half=pi/2
 breaking = False
 
 setmode(BCM)
-GPIO.add_event_detect(brake_pin, RISING, callback=break, bouncetime=200)
-GPIO.add_event_detect(brake_pin, FALLING, callback=unbreak, bouncetime=200)
- # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demo
+GPIO.add_event_detect(brake_pin, RISING, callback=break, bouncetime=1000)
+GPIO.add_event_detect(brake_pin, FALLING, callback=unbreak, bouncetime=1000)
+ # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
 
 
 def brake():
+    print "breaking"
     breaking = True
 def unbreak():
+    print "going"
     breaking = False
 
 for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use_video_port=True):
