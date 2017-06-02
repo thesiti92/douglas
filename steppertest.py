@@ -17,11 +17,12 @@ def turnOffMotors():
 
 class Stepper(port):
 
-    atexit.register(turnOffMotors)
-    degrees_per_step = 1.8
+    def __init__(self):
+        atexit.register(turnOffMotors)
+        degrees_per_step = 1.8
 
-    self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
-    self.setSpeed(40)             # 30 RPM
+        self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
+        self.setSpeed(40)             # 30 RPM
 
     def setRpm(rpm):
         self.setSpeed(rpm)  # 30 RPM
