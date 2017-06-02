@@ -1,8 +1,9 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 from RPi.GPIO import setmode, output, setup, OUT, BCM
 from serial import Serial
+from time import time
 setmode(BCM)
-ser = Serial('/dev/ttyACM1', 115200)
+ser = Serial('/dev/ttyACM0', 115200)
 
 
 class steering_motor:
@@ -19,14 +20,20 @@ class steering_motor:
 
     def turn(self, degrees, dir=True, speed=100, error=1):
         start_degrees = float(ser.readline().split()[0])
+        start_time = time()
         if dir:
             #True is right, false is left
             output(self.dir_pin, 1)
         else:
             output(self.dir_pin, 0)
         self.setSpeed(speed)
-        while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline().split()[0]))))>error):
-            pass
+        try:
+            while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline().split()[0]))))>error):
+                if time()-start_time>.5:
+                    self.setSpeed(0)
+                    return
+        except:
+            turn(degrees, dir, speed, error)
         self.setSpeed(0)
 
     def setSpeed(self, speed):
