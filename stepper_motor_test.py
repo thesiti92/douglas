@@ -22,7 +22,7 @@ class Stepper():
         #port = raw_input("Port Number: 1 for ac, 2 for brake")
         #print port
 
-        self = mh.getStepper(self, 200, 1)  # 200 steps/rev, port (1 or 2)
+        self = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
         self.setSpeed(40)  # 30 RPM
 
     def setRpm(rpm):
