@@ -15,7 +15,7 @@ def turnOffMotors():
     mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
     mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
-class Stepper(port):
+class Stepper(self):
 
     def __init__(self):
         atexit.register(turnOffMotors)
