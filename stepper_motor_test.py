@@ -53,10 +53,10 @@ stepper = Stepper()
 #Loop to test the brake and acceleration stepper motors with a manual control
 while True:
 
-    motor = stepper
+    #motor = stepper
 
     #steps = raw_input("How many steps forward? ")
-    motor.testDouble(5)
+    stepper.testDouble(5)
 
     #steps = raw_input("How many steps backwards? ")
-    motor.testBackDouble(5)
+    stepper.testBackDouble(5)
