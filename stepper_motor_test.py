@@ -14,12 +14,14 @@ def turnOffMotors():
     mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 
-class Stepper(portNum):
+class Stepper():
     def __init__(self):
         atexit.register(turnOffMotors)
         degrees_per_step = 1.8
 
-        self = mh.getStepper(200, portNum)  # 200 steps/rev, port (1 or 2)
+        port = raw_input("Port Number: 1 for ac, 2 for brake")
+
+        self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
         self.setSpeed(40)  # 30 RPM
 
     def setRpm(rpm):
@@ -45,8 +47,8 @@ class Stepper(portNum):
     def testDouble(steps):
         self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
-step[0] = Stepper(1)
-step[1] = Stepper(2)
+step[0] = Stepper()
+step[1] = Stepper()
 
 #Loop to test the brake and acceleration stepper motors with a manual control
 while True:
