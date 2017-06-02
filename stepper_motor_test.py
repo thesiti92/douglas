@@ -45,8 +45,8 @@ class Stepper():
     def testBackDouble(steps):
         self.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-    def testDouble(self):
-        self.step(5, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+    def testDouble(steps):
+        self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 step = Stepper()
 
@@ -55,8 +55,8 @@ while True:
 
     motor = step
 
-    steps = raw_input("How many steps forward? ")
-    motor.testDouble()
+    #steps = raw_input("How many steps forward? ")
+    motor.testDouble(5)
 
-    steps = raw_input("How many steps backwards? ")
+    #steps = raw_input("How many steps backwards? ")
     motor.testBackDouble(5)
