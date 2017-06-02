@@ -47,14 +47,12 @@ class Stepper():
     def testDouble(steps):
         self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
-step[0] = Stepper()
-step[1] = Stepper()
+step = Stepper()
 
 #Loop to test the brake and acceleration stepper motors with a manual control
 while True:
 
-    motorChoice = raw_input("Which motor? (0 = acc, 1 = brake)")
-    motor = step[motorChoice]
+    motor = step
 
     steps = raw_input("How many steps forward? ")
     motor.testDouble(steps)
