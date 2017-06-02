@@ -20,6 +20,7 @@ class Stepper():
         degrees_per_step = 1.8
 
         port = raw_input("Port Number: 1 for ac, 2 for brake")
+        print port
 
         self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
         self.setSpeed(40)  # 30 RPM
