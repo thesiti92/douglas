@@ -14,12 +14,12 @@ def turnOffMotors():
     mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 
-class Stepper(port):
+class Stepper(portNum):
     def __init__(self):
         atexit.register(turnOffMotors)
         degrees_per_step = 1.8
 
-        self = mh.getStepper(200, port)  # 200 steps/rev, port (1 or 2)
+        self = mh.getStepper(200, portNum)  # 200 steps/rev, port (1 or 2)
         self.setSpeed(40)  # 30 RPM
 
     def setRpm(rpm):
