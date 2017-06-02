@@ -6,8 +6,12 @@
 //   Low Performance:  neither pin has interrupt capability
 Encoder myEnc(3, 4);
 volatile unsigned int revolutions;
-unsigned int mph;
 unsigned long lastmillis;
+float last = 0;
+float timeElapsed = 0;
+float circ = 67.23;
+float mph;
+float mph_conversion = circ * 2.23694;
 
 long oldPosition  = -999;
 float old_speed = -999;
@@ -18,11 +22,13 @@ int hall_pin = 0;
 
 void setup() {
   Serial.begin(115200);
-  attachInterrupt(hall_pin, update_rev, RISING); 
+  attachInterrupt(hall_pin, update_mph, RISING); 
   revolutions = 0;
   mph = 0;
   lastmillis = 0;
   pinMode(stop_pin, OUTPUT);      // sets the digital pin as output
+  last = millis();
+
 
 }
 //analog scaling factor is .00500489=5 *(5.0 / 1023.0)--voltage conversion /(5/1024)--voltage scaling /1000--conversion to m from mm
@@ -39,24 +45,16 @@ void loop() {
     oldPosition = newPosition;
     Serial.println(String(newPosition*.0975) + " " + String(mph));
   }
-  if (millis() - lastmillis>=1500){ //Uptade every one second, this will be equal to reading frecuency (Hz).
-    detachInterrupt(0);//Disable interrupt when calculating
-//    rpm = revolutions * 60; // Convert frecuency to RPM, note: this works for one interruption per full rotation.
-    mph = revolutions*2.811; // revolutions * 60rpm * circumference in km * 60 to get kph * .6214 to get mph
-    Serial.println(revolutions);
-    Serial.println(String(newPosition*.0975) + " " + String(mph));
-    revolutions = 0; // Restart the RPM counter
-    lastmillis = millis(); // Uptade lasmillis
-    attachInterrupt(0, update_rev, FALLING); //enable interrupt
-  }
 }
 // I dont think we need this check after all if we have a 1 second latency
 // if(abs(current_speed-old_speed)>1) {
 //   Serial.println(String(newPosition*.0975) + " " + current_speed);
 // }
 
- void update_rev()
+ void update_mph()
  {
-   revolutions++;
-
+   timeElapsed = millis() - last;
+   mph = timeElapsed * mph_conversion;
+   Serial.println(String(newPosition*.0975) + " " + String(mph));
+   last = millis();
  }
