@@ -56,7 +56,7 @@ while True:
     motor = step
 
     steps = raw_input("How many steps forward? ")
-    motor.testDouble(steps)
+    motor.testDouble(int (steps))
 
     steps = raw_input("How many steps backwards? ")
-    motor.testBackDouble(steps)
+    motor.testBackDouble(int (steps))
