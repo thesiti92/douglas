@@ -10,6 +10,7 @@ stream = PiRGBArray(camera)
 brake_pin = 12
 half=pi/2
 braking = False
+mph=0
 
 setmode(BCM)
 setup(brake_pin, IN)
@@ -25,10 +26,19 @@ def brake(channel):
 add_event_detect(brake_pin, BOTH, callback=brake, bouncetime=1000)
  # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
 for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use_video_port=True):
+    #TODO: check mph and if off by a bit accelerate/decelerate
+    #TODO: write clean acceleration and breaking methods to import from another file. maybe have varying degrees of acceleration or breaking.
+
+    #to read in mph: need try except because arduino sometimes gives null values
+    try:
+        mph = ser.readline().split()[1]
+    except:
+        pass
+
     if braking:
         kill()
         print "we braked"
-        #actuate break motor and disengage accelerator motor
+        #TODO: actuate break motor and disengage accelerator motor
         continue
     ret3,frame = threshold(bilateralFilter(cvtColor(stream.array, COLOR_BGR2GRAY),12,70,70),0,255,THRESH_BINARY+THRESH_OTSU)
     edges = Canny(frame,1000,1000, 5)
