@@ -44,7 +44,7 @@ def testDouble(self, steps):
 
 # motor = stepper
 steps = 30
-# steps = raw_input("How many steps forward? ")
+steps = raw_input("How many steps forward? ")
 myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
 # steps = raw_input("How many steps backwards? ")
