@@ -12,19 +12,28 @@ unsigned long lastmillis;
 long oldPosition  = -999;
 float old_speed = -999;
 long newPosition = 0;
+int sonar_pin = 0;
+int stop_pin = 13;
 
 void setup() {
   Serial.begin(115200);
-  attachInterrupt(0, update_rev, RISING);
+  attachInterrupt(0, update_rev, RISING); // 0 is the hall sensor pin
   revolutions = 0;
   mph = 0;
   lastmillis = 0;
-}
+  pinMode(stop_pin, OUTPUT);      // sets the digital pin as output
 
+}
+//analog scaling factor is .00500489=5 *(5.0 / 1023.0)--voltage conversion /(5/1024)--voltage scaling /1000--conversion to m from mm
 void loop() {
+  if(analogRead(sonar_pin)<599){ // 599 = .00500489/3 meters -- simplifying the inequality
+    digitalWrite(stop_pin, HIGH);
+  }
+  else{
+    digitalWrite(stop_pin, LOW);
+  }
   newPosition = myEnc.read();
   // float current_speed=0; //mateen needs to get hall effect code for this to work, this should read in speed from hall sensor
-
   if (newPosition != oldPosition) {
     oldPosition = newPosition;
     Serial.println(String(newPosition*.0975) + " " + mph);
@@ -41,7 +50,6 @@ void loop() {
  void update_rev()
  {
    revolutions++;
-   //Each rotation, this interrupt function is run twice
  }
  void get_mph(){
    detachInterrupt(0);//Disable interrupt when calculating
