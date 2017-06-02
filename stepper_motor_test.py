@@ -56,7 +56,7 @@ while True:
     #motor = stepper
 
     #steps = raw_input("How many steps forward? ")
-    stepper.testDouble(5)
+    #stepper.testDouble(5)
 
     #steps = raw_input("How many steps backwards? ")
     stepper.testBackDouble(5)
