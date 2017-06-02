@@ -4,7 +4,7 @@ from cv2 import threshold, cvtColor, resize, COLOR_BGR2GRAY, THRESH_BINARY, THRE
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 from steering import turn, kill
-from RPi.GPIO import IN, setmode, setup, BCM, add_event_detect, RISING, FALLING
+from RPi.GPIO import IN, setmode, setup, BCM, add_event_detect, BOTH, input
 camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
@@ -15,19 +15,19 @@ setmode(BCM)
 setup(brake_pin, IN)
 
 
-
 def brake():
-    print "braking"
-    braking = True
-def unbrake():
-    print "going"
-    braking = False
-add_event_detect(brake_pin, RISING, callback=brake, bouncetime=1000)
-add_event_detect(brake_pin, FALLING, callback=unbrake, bouncetime=1000)
+    if input(brake_pin):
+        print "braking"
+        braking = True
+    else:
+        print "going"
+        braking = False
+add_event_detect(brake_pin, BOTH, callback=brake, bouncetime=1000)
  # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
 for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use_video_port=True):
     if braking:
         kill()
+        print "we braked"
         #actuate break motor and disengage accelerator motor
         continue
     ret3,frame = threshold(bilateralFilter(cvtColor(stream.array, COLOR_BGR2GRAY),12,70,70),0,255,THRESH_BINARY+THRESH_OTSU)
