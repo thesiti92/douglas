@@ -1,11 +1,11 @@
-import steppertest
+from steppertest import Stepper
 
 step[0] = Stepper(1)
 step[1] = Stepper(2)
 
 #Loop to test the brake and acceleration stepper motors with a manual control
 while True:
-    
+
     motorChoice = raw_input("Which motor? (0 = acc, 1 = brake)")
     motor = step[motorChoice]
 
