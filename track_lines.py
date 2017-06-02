@@ -15,7 +15,7 @@ setmode(BCM)
 setup(brake_pin, IN)
 
 
-def brake():
+def brake(channel):
     if input(brake_pin):
         print "braking"
         braking = True
