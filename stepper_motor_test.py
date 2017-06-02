@@ -41,11 +41,11 @@ def testDouble(self, steps):
     myStepper.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 # Loop to test the brake and acceleration stepper motors with a manual control
-while True:
-    # motor = stepper
-    steps = 30
-    # steps = raw_input("How many steps forward? ")
-    myStepper.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
-    # steps = raw_input("How many steps backwards? ")
-    #myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+# motor = stepper
+steps = 30
+# steps = raw_input("How many steps forward? ")
+myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+
+# steps = raw_input("How many steps backwards? ")
+#myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
