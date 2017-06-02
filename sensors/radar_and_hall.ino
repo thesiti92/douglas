@@ -15,7 +15,7 @@ long anVolt, mm, inches;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  attachInterrupt(0, magnet_detect, RISING);//Initialize the intterrupt pin (Arduino digital pin 2)
+  attachInterrupt(digitalPinToInterrupt(3),magnet_detect(),RISING);
 
   pinMode(1,INPUT);  
   
@@ -26,7 +26,6 @@ void loop() {
   read_sensor(); 
   print_range();
   //if hall sensor pin is high or low (which is which?) then call calculate speed
-  attachInterrupt(digitalPinToInterrupt(3),magnet_detect(),RISING);
   delay(100); 
 
    /*
