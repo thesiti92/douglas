@@ -45,8 +45,8 @@ class Stepper():
     def testBackDouble(steps):
         self.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-    def testDouble(steps):
-        self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+    def testDouble(self):
+        self.step(5, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 step = Stepper()
 
