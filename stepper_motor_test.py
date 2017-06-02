@@ -22,7 +22,7 @@ class Stepper():
         #port = raw_input("Port Number: 1 for ac, 2 for brake")
         #print port
 
-        self = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
+        self = mh.getStepper(self, 200, 1)  # 200 steps/rev, port (1 or 2)
         self.setSpeed(40)  # 30 RPM
 
     def setRpm(rpm):
@@ -34,26 +34,26 @@ class Stepper():
         self.step(200, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
     def testSingle(steps):
-        self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.SINGLE)
+        self.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.SINGLE)
 
     def setRpm(rpm):
         self.setSpeed(rpm)
 
     def testBackSingle(steps):
-        self.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
+        self.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
     def testBackDouble(steps):
-        self.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+        self.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
     def testDouble(steps):
-        self.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+        self.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
-step = Stepper()
+stepper = Stepper()
 
 #Loop to test the brake and acceleration stepper motors with a manual control
 while True:
 
-    motor = step
+    motor = stepper
 
     #steps = raw_input("How many steps forward? ")
     motor.testDouble(5)
