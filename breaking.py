@@ -12,8 +12,8 @@ class motor:
         if (pwm_pin < 0) or (pwm_pin > 15):
             raise NameError('PWM pin must be between 0 and 15 inclusive')
         self.pwm_pin = pwm_pin
-        self.sleep_pin = sleep_pin
-        setup(sleep_pin, OUT)
+        #self.sleep_pin = sleep_pin
+        #setup(sleep_pin, OUT)
         self.dir_pin = dir_pin
         setup(dir_pin, OUT)
     
