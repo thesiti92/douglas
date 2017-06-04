@@ -39,7 +39,7 @@ class motor:
                 self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
                 break
 
-    def brake(time):
+    def brake(self, time):
         speed=100
         time_on=time
         output(self.dir_pin, 0) #decides whether brakiing or unbraking
