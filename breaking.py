@@ -1,9 +1,9 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 from RPi.GPIO import setmode, output, setup, OUT, BCM
-from serial import Serial
+#from serial import Serial
 from time import time
 setmode(BCM)
-ser = Serial('/dev/ttyACM0', 115200)
+#ser = Serial('/dev/ttyACM0', 115200)
 
 
 class motor:
