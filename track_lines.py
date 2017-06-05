@@ -6,6 +6,7 @@ from picamera.array import PiRGBArray
 from steering import turn, kill
 from RPi.GPIO import IN, setmode, setup, BCM, add_event_detect, BOTH, input
 from breaking import pull_brake, release_brake
+import threading
 camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
@@ -36,13 +37,17 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
     #TODO: write clean acceleration and breaking methods to import from another file. maybe have varying degrees of acceleration or breaking.
 
     #to read in mph: need try except because arduino sometimes gives null values
+
     try:
         mph = ser.readline().split()[1]
     except:
         pass
 
     #Cruise Control: pulses throttle while speed <2 mph
+    thr = threading.Thread(target = foo, args = (), kwargs=({}))
+
     while mph < 2 & braking == false:
+        thr.start()
         throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
         throttle.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
