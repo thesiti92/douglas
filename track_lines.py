@@ -26,7 +26,8 @@ throttle.setSpeed(40)  # 40 RPM
 steps = 30
 
 def cruise():
-    throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+    global steps
+    throttle.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 #Cruise Control: pulses throttle while speed <2 mph
 thr = threading.Thread(target = cruise)

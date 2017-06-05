@@ -24,7 +24,7 @@ class braking_motor:
 
     def release_brake(self, speed=1000, time_on=1):
         output(self.dir_pin, 1) #decides whether brakiing or unbraking
-        self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
+        self.MC._pwm.setPWM(self.pwm_pin, 1, speed)
         sleep(time_on)
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
