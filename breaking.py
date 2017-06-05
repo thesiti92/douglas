@@ -51,4 +51,5 @@ mh = Adafruit_MotorHAT()
 brake_motor = braking_motor(mh, 14, 23) #create break motor. pwm pin 14,
 if __name__ == "__main__":
     #testing the motor
-    brake_motor.brake(.5)
+    brake_motor.pull_brake()
+    brake_motor.release_brake()
