@@ -44,12 +44,16 @@ class braking_motor:
          self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
          sleep(time_on)
          self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
-        
+
     def kill(self):
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
 mh = Adafruit_MotorHAT()
 brake_motor = braking_motor(mh, 14, 23) #create break motor. pwm pin 14,
+
+def brake(speed = 1000, time_on=1):
+    brake_motor.pull_brake()
+    
 if __name__ == "__main__":
     #testing the motor
     brake_motor.pull_brake()

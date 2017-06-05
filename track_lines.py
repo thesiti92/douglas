@@ -5,6 +5,7 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 from steering import turn, kill
 from RPi.GPIO import IN, setmode, setup, BCM, add_event_detect, BOTH, input
+from breaking import brake
 camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
@@ -36,9 +37,10 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
         pass
 
     if braking:
+        brake()
         kill()
         print "we braked"
-        #TODO: actuate break motor and disengage accelerator motor
+        #TODO: disengage accelerator motor
         continue
     ret3,frame = threshold(bilateralFilter(cvtColor(stream.array, COLOR_BGR2GRAY),12,70,70),0,255,THRESH_BINARY+THRESH_OTSU)
     edges = Canny(frame,1000,1000, 5)
