@@ -25,6 +25,7 @@ throttle.setSpeed(40)  # 40 RPM
 steps = 30
 #Cruise Control: pulses throttle while speed <2 mph
 thr = threading.Thread(target = cruise)
+breaked = False
 
 def cruise():
     throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
@@ -52,7 +53,9 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
         pass
 
     if braking:
-        brake()
+        if braked == False:
+            brake()
+            braked == True
         kill()
         print "we braked"
         #TODO: disengage accelerator motor
