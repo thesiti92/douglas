@@ -33,25 +33,18 @@ class braking_motor:
         sleep(time_on)
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
-###ELI HAS THE SPEDS
-    # def brake(self, time):
-    #     speed=100
-    #     time_on=time
-    #     output(self.dir_pin, 0) #decides whether brakiing or unbraking
-    #     self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
-    #     start_time=time()
-    #     while true:
-    #         if time()-start_time>time_on:
-    #             self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
-    #             break # could immediately switch directions and go backwards in this while loop...
-    #     output(self.dir_pin, 1) #decides whether brakiing or unbraking
-    #     self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
-    #     start_time=time()
-    #     while true:
-    #         if time()-start_time>time_on:
-    #             self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
-    #             break
-
+##ELI HAS THE SPEDS
+     def brake(self, speed=200, time_on=1):
+         speed = int(raw_input ("Speed?"))
+         output(self.dir_pin, 0) #decides whether brakiing or unbraking
+         self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
+         sleep(time_on)
+         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
+         output(self.dir_pin, 1) #decides whether brakiing or unbraking
+         self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
+         sleep(time_on)
+         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
+        
     def kill(self):
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
