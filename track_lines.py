@@ -1,4 +1,5 @@
 from numpy import array, average, pi, where
+from Adafruit_MotorHAT import Adafruit_MotorHAT
 from math import degrees
 from serial import Serial
 from cv2 import threshold, cvtColor, resize, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU, Canny, HoughLines, bilateralFilter
@@ -19,7 +20,7 @@ mph=0
 setmode(BCM)
 setup(brake_pin, IN)
 
-mh = Adafruit.MotorHAT()
+mh = Adafruit_MotorHAT()
 throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
 throttle.setSpeed(40)  # 40 RPM
 steps = 30

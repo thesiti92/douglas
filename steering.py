@@ -29,7 +29,7 @@ class steering_motor:
                 output(self.dir_pin, 0)
             self.setSpeed(speed)
             while(abs(degrees-abs(abs(start_degrees)-abs(float(ser.readline().split()[0]))))>error):
-                if time()-start_time>.5:
+                if time()-start_time>1:
                     self.setSpeed(0)
                     return
         except:
