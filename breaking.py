@@ -4,7 +4,7 @@ from time import sleep
 setmode(BCM)
 
 
-class beaking_motor:
+class braking_motor:
     def __init__(self, controller, pwm_pin, dir_pin):
         self.MC = controller
         if (pwm_pin < 0) or (pwm_pin > 15):
@@ -48,7 +48,7 @@ class beaking_motor:
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
 mh = Adafruit_MotorHAT()
-brake_motor = motor(mh, 14, 23) #create break motor. pwm pin 14,
+brake_motor = braking_motor(mh, 14, 23) #create break motor. pwm pin 14,
 if __name__ == "__main__":
     #testing the motor
     brake_motor.brake(.5)
