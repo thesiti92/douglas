@@ -11,6 +11,7 @@ class braking_motor:
             raise NameError('PWM pin must be between 0 and 15 inclusive')
         self.pwm_pin = pwm_pin
         self.dir_pin = dir_pin
+        GPIO.setwarnings(False)
         setup(dir_pin, OUT)
 
     def pull_brake(self, speed=100, time_on=1):
