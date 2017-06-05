@@ -15,14 +15,14 @@ class braking_motor:
         GPIO.setwarnings(False)
         setup(dir_pin, OUT)
 
-    def pull_brake(self, speed=200, time_on=1):
+    def pull_brake(self, speed=1000, time_on=1):
 
         output(self.dir_pin, 0) #decides whether braking or unbraking
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
         sleep(time_on)
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
 
-    def release_brake(self, speed=200, time_on=1):
+    def release_brake(self, speed=1000, time_on=1):
         output(self.dir_pin, 1) #decides whether brakiing or unbraking
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
         sleep(time_on)
