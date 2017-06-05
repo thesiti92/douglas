@@ -1,5 +1,5 @@
 from numpy import array, average, pi, where
-from Adafruit_MotorHAT import Adafruit_MotorHAT
+# from Adafruit_MotorHAT import Adafruit_MotorHAT
 from math import degrees
 from serial import Serial
 from cv2 import threshold, cvtColor, resize, COLOR_BGR2GRAY, THRESH_BINARY, THRESH_OTSU, Canny, HoughLines, bilateralFilter
@@ -21,16 +21,16 @@ setmode(BCM)
 setup(brake_pin, IN)
 
 mh = Adafruit_MotorHAT()
-throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
-throttle.setSpeed(40)  # 40 RPM
+# throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
+# throttle.setSpeed(40)  # 40 RPM
 steps = 30
 
-def cruise():
-    global steps
-    throttle.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+# def cruise():
+#     global steps
+#     throttle.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 
 #Cruise Control: pulses throttle while speed <2 mph
-thr = threading.Thread(target = cruise)
+#thr = threading.Thread(target = cruise)
 breaked = False
 
 
@@ -52,11 +52,11 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
 
     #to read in mph: need try except because arduino sometimes gives null values
 
-    try:
-        if ser.readline().split()[1] < 2 & braking == False:
-            thr.start()
-    except:
-        pass
+    # try:
+    #     if ser.readline().split()[1] < 2 & braking == False:
+    #         thr.start()
+    # except:
+    #     pass
 
     if braking:
         if braked == False:

@@ -4,24 +4,32 @@
 //   Best Performance: both pins have interrupt capability
 //   Good Performance: only the first pin has interrupt capability
 //   Low Performance:  neither pin has interrupt capability
-Encoder myEnc(2, 3);
-volatile byte revolutions;
-unsigned int mph;
+Encoder myEnc(3, 4);
+volatile unsigned int revolutions;
 unsigned long lastmillis;
+float last = 0;
+float timeElapsed = 0;
+float circ = .6723;
+float mph;
+float last_mph;
+float mph_conversion = circ * 2.23694*1000;
 
 long oldPosition  = -999;
 float old_speed = -999;
 long newPosition = 0;
 int sonar_pin = 0;
 int stop_pin = 13;
+int hall_pin = 0;
 
 void setup() {
   Serial.begin(115200);
-  attachInterrupt(0, update_rev, RISING); // 0 is the hall sensor pin
+//  attachInterrupt(hall_pin, update_mph, RISING); 
   revolutions = 0;
   mph = 0;
   lastmillis = 0;
   pinMode(stop_pin, OUTPUT);      // sets the digital pin as output
+  last = millis();
+
 
 }
 //analog scaling factor is .00500489=5 *(5.0 / 1023.0)--voltage conversion /(5/1024)--voltage scaling /1000--conversion to m from mm
@@ -36,15 +44,7 @@ void loop() {
   // float current_speed=0; //mateen needs to get hall effect code for this to work, this should read in speed from hall sensor
   if (newPosition != oldPosition) {
     oldPosition = newPosition;
-    Serial.println(String(newPosition*.0975) + " " + mph);
-  }
-  /*
-  if (millis() - lastmillis == 1000){ //Update every one second, this will be equal to reading frequency (Hz).
-    get_mph();
-  }
-  */  
-  if (millis() - lastmillis >= 3000){ //set speed to 0 if hall sensor is not triggered in 3 seconds or more
-    mph = 0;
+    Serial.println(String(newPosition*.0975) + " " + String(mph));
   }
 }
 // I dont think we need this check after all if we have a 1 second latency
@@ -52,19 +52,13 @@ void loop() {
 //   Serial.println(String(newPosition*.0975) + " " + current_speed);
 // }
 
- void update_rev()
+ void update_mph()
  {
-   revolutions++;
- }
- void get_mph(){
-   detachInterrupt(0);//Disable interrupt when calculating
-   // rpm = revolutions * 60; // Convert frecuency to RPM, note: this works for one interruption per full rotation.
-   mph = revolutions*2.811; // revolutions * 60rpm * circumference in km * 60 to get kph * .6214 to get mph
-   Serial.println(String(newPosition*.0975) + " " + mph);
-   revolutions = 0; // Restart the RPM counter
-   lastmillis = millis(); // Uptade lasmillis
-   attachInterrupt(0, update_rev, FALLING); //enable interrupt
-   
-   
-   
+   timeElapsed = millis() - last;
+   mph = mph_conversion/timeElapsed;
+   if(mph!=last_mph){
+       Serial.println(String(newPosition*.0975) + " " + String(mph));
+       last_mph = mph;
+   }
+   last = millis();
  }
