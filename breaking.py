@@ -19,7 +19,7 @@ class braking_motor:
         #speed change for testing
         speed = int(raw_input ("Speed?"))
 
-        output(self.dir_pin, 0) #decides whether brakiing or unbraking
+        output(self.dir_pin, 0) #decides whether braking or unbraking
         self.MC._pwm.setPWM(self.pwm_pin, 0, speed)
         sleep(time_on)
         self.MC._pwm.setPWM(self.pwm_pin, 0, 0)
