@@ -24,12 +24,15 @@ mh = Adafruit_MotorHAT()
 throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
 throttle.setSpeed(40)  # 40 RPM
 steps = 30
+
+def cruise():
+    throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+
 #Cruise Control: pulses throttle while speed <2 mph
 thr = threading.Thread(target = cruise)
 breaked = False
 
-def cruise():
-    throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+
 
 def brake(channel):
     if input(brake_pin):
