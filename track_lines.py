@@ -35,6 +35,7 @@ breaked = False
 
 
 def brake(channel):
+    global breaking
     if input(brake_pin):
         print "braking"
         braking = True
