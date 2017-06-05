@@ -51,6 +51,6 @@ steps = int(raw_input("How many steps? "))
 if direct == f:
     myStepper.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
 if direct == b:
-    myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+    myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 # steps = raw_input("How many steps backwards? ")
 #myStepper.step(steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
