@@ -11,6 +11,7 @@ float last = 0;
 float timeElapsed = 0;
 float circ = .6723;
 float mph;
+float last_mph;
 float mph_conversion = circ * 2.23694*1000;
 
 long oldPosition  = -999;
@@ -55,6 +56,9 @@ void loop() {
  {
    timeElapsed = millis() - last;
    mph = mph_conversion/timeElapsed;
-   Serial.println(String(newPosition*.0975) + " " + String(mph));
+   if(mph!=last_mph){
+       Serial.println(String(newPosition*.0975) + " " + String(mph));
+       last_mph = mph;
+   }
    last = millis();
  }
