@@ -1,5 +1,6 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT
-from RPi.GPIO import setmode, output, setup, OUT, BCM
+#from RPi.GPIO import setmode, output, setup, OUT, BCM
+import RPi.GPIO as GPIO
 from time import sleep
 setmode(BCM)
 
