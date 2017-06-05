@@ -22,6 +22,11 @@ throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
 throttle.setSpeed(40)  # 40 RPM
 steps = 30
 
+def cruise():
+    while mph < 2 & braking == false
+        throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
+        # throttle.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+
 def brake(channel):
     if input(brake_pin):
         print "braking"
@@ -44,12 +49,10 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
         pass
 
     #Cruise Control: pulses throttle while speed <2 mph
-    thr = threading.Thread(target = foo, args = (), kwargs=({}))
+    thr = threading.Thread(target = cruise)
 
-    while mph < 2 & braking == false:
+    if mph < 2 & braking == false:
         thr.start()
-        throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE)
-        throttle.step(self, steps, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
     if braking:
         kill()
