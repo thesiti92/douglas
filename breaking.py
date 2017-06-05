@@ -4,7 +4,7 @@ from time import sleep
 setmode(BCM)
 
 
-class motor:
+class beaking_motor:
     def __init__(self, controller, pwm_pin, dir_pin):
         self.MC = controller
         if (pwm_pin < 0) or (pwm_pin > 15):
