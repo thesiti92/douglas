@@ -8,4 +8,4 @@ throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
 throttle.setSpeed(40)  # 40 RPM
 steps = 30
 
-throttle.step(throttle.step(self, steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE))
+throttle.step(throttle.step(steps, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.DOUBLE))
