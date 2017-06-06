@@ -64,7 +64,10 @@ def loop():
                 dobrake(speed=1000)
                 braked == True
             kill()
+            stream.truncate()
             print "we braked"
+            stream.seek(0)
+            
             #TODO: disengage accelerator motor
             continue
         ret3,frame = threshold(bilateralFilter(cvtColor(stream.array, COLOR_BGR2GRAY),12,70,70),0,255,THRESH_BINARY+THRESH_OTSU)
@@ -88,8 +91,8 @@ def loop():
         stream.truncate()
         stream.seek(0)
 
-if __name__ == "__name__": 
-    try:
-        loop()
-    except:
-        loop()
+try:
+    loop()
+except:
+    loop()
+
