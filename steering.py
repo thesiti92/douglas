@@ -3,7 +3,7 @@ from RPi.GPIO import setmode, output, setup, OUT, BCM
 from serial import Serial
 from time import time
 setmode(BCM)
-ser = Serial('/dev/ttyACM0', 115200)
+ser = Serial('/dev/ttyACM1', 115200)
 
 
 class steering_motor:
@@ -18,7 +18,7 @@ class steering_motor:
         self.dir_pin = dir_pin
         setup(dir_pin, OUT)
 
-    def turn(self, degrees, dir=True, speed=130, error=1):
+    def turn(self, degrees, dir=True, speed=200, error=1):
         try:
             start_degrees = float(ser.readline().split()[0])
             start_time = time()

@@ -7,9 +7,9 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 from steering import turn, kill
 from RPi.GPIO import IN, setmode, setup, BCM, add_event_detect, BOTH, input
-from breaking import brake
+from breaking import dobrake
 import threading
-ser = Serial('/dev/ttyACM0', 115200)
+#ser = Serial('/dev/ttyACM0', 115200)
 camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
@@ -20,7 +20,7 @@ mph=0
 setmode(BCM)
 setup(brake_pin, IN)
 
-mh = Adafruit_MotorHAT()
+#mh = Adafruit_MotorHAT()
 # throttle = mh.getStepper(200, 1)  # 200 steps/rev, port (1 or 2)
 # throttle.setSpeed(40)  # 40 RPM
 steps = 30
@@ -31,12 +31,12 @@ steps = 30
 
 #Cruise Control: pulses throttle while speed <2 mph
 #thr = threading.Thread(target = cruise)
-breaked = False
+braked = False
 
 
 
 def brake(channel):
-    global breaking
+    global braking
     if input(brake_pin):
         print "braking"
         braking = True
@@ -49,7 +49,7 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
     #TODO: check mph and if off by a bit accelerate/decelerate
 
     #TODO: write clean acceleration and breaking methods to import from another file. maybe have varying degrees of acceleration or breaking.
-
+    print braking
     #to read in mph: need try except because arduino sometimes gives null values
 
     # try:
@@ -60,7 +60,7 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
 
     if braking:
         if braked == False:
-            brake()
+            dobrake(speed=1000)
             braked == True
         kill()
         print "we braked"
@@ -86,3 +86,4 @@ for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use
         turn(degrees(radians_to_turn), dir=True)
     stream.truncate()
     stream.seek(0)
+
