@@ -80,8 +80,7 @@ def loop():
             stream.seek(0)
             continue
         thetas=array([theta for rho, theta in lines[0]])
-        #theta_filtered=thetas[where((thetas>=0) & (thetas <=pi))]
-        theta_filtered=thetas
+        theta_filtered=thetas[where((thetas>=0) & (thetas <=pi))]
         
         #use list of thetas to figure out degrees to turn
         if (average(theta_filtered) < half):
