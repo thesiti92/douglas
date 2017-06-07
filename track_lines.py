@@ -14,8 +14,6 @@ camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
 half=pi/2
-straight_range=.1
-
 #braking = False
 mph=0
 
@@ -46,20 +44,20 @@ braked = False
 #        print "going"
 #        braking = False
 #add_event_detect(brake_pin, BOTH, callback=brake, bouncetime=1000)
- # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
+# this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
 def loop():
     for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use_video_port=True):
         #TODO: check mph and if off by a bit accelerate/decelerate
-
+        
         #TODO: write clean acceleration and breaking methods to import from another file. maybe have varying degrees of acceleration or breaking.
         #to read in mph: need try except because arduino sometimes gives null values
-
+        
         # try:
         #     if ser.readline().split()[1] < 2 & braking == False:
         #         thr.start()
         # except:
         #     pass
-
+        
         if input(brake_pin):
             global braked
             if not braked:
@@ -82,20 +80,21 @@ def loop():
             stream.seek(0)
             continue
         thetas=array([theta for rho, theta in lines[0]])
-        print thetas
         #theta_filtered=thetas[where((thetas>=0) & (thetas <=pi))]
         theta_filtered=thetas
         
         #use list of thetas to figure out degrees to turn
-        if (average( 1.75 * np.pi < theta_filtered <2*np.pi-straight_range)):
+        if (1.75*np.pi < average(theta_filtered) < 2*np.pi-0.1):
             radians_to_turn = 2*np.pi - average(thetas)
             print "turning %d degrees right" % degrees(radians_to_turn)
             turn(degrees(radians_to_turn), dir=True)
         else:
-            if (average(theta_filtered) > straight_range):
+            if (0.1 < average(theta_filtered)):
                 radians_to_turn = average(thetas) - 0
                 print "turning %d degrees left" % degrees(radians_to_turn)
                 turn(degrees(radians_to_turn), dir=False)
+            turn(0, dir=False)
+
         stream.truncate()
         stream.seek(0)
 
@@ -103,4 +102,3 @@ try:
     loop()
 except:
     loop()
-
