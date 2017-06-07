@@ -84,17 +84,14 @@ def loop():
         theta_filtered=thetas
         
         #use list of thetas to figure out degrees to turn
-        if (1.75*np.pi < average(theta_filtered) < 2*np.pi-0.1):
-            radians_to_turn = 2*np.pi - average(thetas)
+        if (average(theta_filtered) < half):
+            radians_to_turn = half - average(thetas)
             print "turning %d degrees right" % degrees(radians_to_turn)
             turn(degrees(radians_to_turn), dir=True)
         else:
-            if (0.1 < average(theta_filtered)):
-                radians_to_turn = average(thetas) - 0
-                print "turning %d degrees left" % degrees(radians_to_turn)
-                turn(degrees(radians_to_turn), dir=False)
-            turn(0, dir=False)
-
+            radians_to_turn = average(thetas) - half
+            print "turning %d degrees left" % degrees(radians_to_turn)
+            turn(degrees(radians_to_turn), dir=False)
         stream.truncate()
         stream.seek(0)
 
