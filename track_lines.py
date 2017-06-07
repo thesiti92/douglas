@@ -14,6 +14,7 @@ camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
 half=pi/2
+straight_range=.1
 
 #braking = False
 mph=0
@@ -86,12 +87,12 @@ def loop():
         theta_filtered=thetas
         
         #use list of thetas to figure out degrees to turn
-        if (average(theta_filtered) < -.1):
+        if (average(3/4* np.pi < theta_filtered <2*np.pi-straight_range)):
             radians_to_turn = 0 - average(thetas)
             print "turning %d degrees right" % degrees(radians_to_turn)
             turn(degrees(radians_to_turn), dir=True)
         else:
-            if (average(theta_filtered) > .1):
+            if (average(theta_filtered) > straight_range):
                 radians_to_turn = average(thetas) - 0
                 print "turning %d degrees left" % degrees(radians_to_turn)
                 turn(degrees(radians_to_turn), dir=False)
