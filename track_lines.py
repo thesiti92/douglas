@@ -14,7 +14,7 @@ camera = PiCamera()
 stream = PiRGBArray(camera)
 brake_pin = 12
 half=pi/2
-braking = False
+#braking = False
 mph=0
 
 setmode(BCM)
@@ -35,22 +35,21 @@ braked = False
 
 
 
-def brake(channel):
-    global braking
-    if input(brake_pin):
-        print "braking"
-        braking = True
-    else:
-        print "going"
-        braking = False
-add_event_detect(brake_pin, BOTH, callback=brake, bouncetime=1000)
+#def brake(channel):
+#    global braking
+#    if input(brake_pin):
+#        print "braking"
+#        braking = True
+#    else:
+#        print "going"
+#        braking = False
+#add_event_detect(brake_pin, BOTH, callback=brake, bouncetime=1000)
  # this callback is just to reset the steering. we shouldnt reset the cruise control because we'd need to reset the demos
 def loop():
     for foo in camera.capture_continuous(stream, format='bgr', resize=(640,480), use_video_port=True):
         #TODO: check mph and if off by a bit accelerate/decelerate
 
         #TODO: write clean acceleration and breaking methods to import from another file. maybe have varying degrees of acceleration or breaking.
-        print braking
         #to read in mph: need try except because arduino sometimes gives null values
 
         # try:
@@ -59,13 +58,15 @@ def loop():
         # except:
         #     pass
 
-        if braking:
-            if braked == False:
-                dobrake(speed=1000)
-                braked == True
-            kill()
+        if input(brake_pin):
+            global braked
+            if not braked:
+                print "breaking"
+                dobrake(speed=1000, time_on=1.5)
+                braked = True
+                kill()
             stream.truncate()
-            print "we braked"
+            
             stream.seek(0)
             
             #TODO: disengage accelerator motor
@@ -84,10 +85,12 @@ def loop():
         #use list of thetas to figure out degrees to turn
         if (average(theta_filtered) < half):
             radians_to_turn = half - average(thetas)
-            turn(degrees(radians_to_turn), dir=False)
+            print "turning %d degrees right" % degrees(radians_to_turn)
+            turn(degrees(radians_to_turn), dir=True)
         else:
             radians_to_turn = average(thetas) - half
-            turn(degrees(radians_to_turn), dir=True)
+            print "turning %d degrees left" % degrees(radians_to_turn)
+            turn(degrees(radians_to_turn), dir=False)
         stream.truncate()
         stream.seek(0)
 
