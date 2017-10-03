@@ -1,9 +1,9 @@
+//Polls all sensor data from the kart and pushes it to the Pi through a serial connection
+//Sensors include: Hall effect for speed, encoder for steering motor position (using a handy encoder library),
+//and a sonar sensor for auto-breaking
+
 #include <Encoder.h>
 
-// Change these two numbers to the pins connected to your encoder.
-//   Best Performance: both pins have interrupt capability
-//   Good Performance: only the first pin has interrupt capability
-//   Low Performance:  neither pin has interrupt capability
 Encoder myEnc(3, 4);
 volatile unsigned int revolutions;
 unsigned long lastmillis;
